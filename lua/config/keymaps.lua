@@ -19,5 +19,11 @@ vim.keymap.set("v", "<Down>", "<Nop>", { noremap = true, silent = true })
 vim.keymap.set("v", "<Left>", "<Nop>", { noremap = true, silent = true })
 vim.keymap.set("v", "<Right>", "<Nop>", { noremap = true, silent = true })
 
-vim.api.nvim_set_keymap("n", "<Tab>", ":bnext<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<S-Tab>", ":bprev<CR>", { noremap = true, silent = true })
+-- Center current line when scolling with Ctrl + D or Ctrl + U
+
+vim.keymap.set("n", "<C-d>", "<C-d>zz", { noremap = true, silent = true })
+vim.keymap.set("n", "<C-u>", "<C-u>zz", { noremap = true, silent = true })
+
+-- Center the cursor when navigating search results
+vim.keymap.set("n", "n", "nzzzv", { noremap = true, silent = true })
+vim.keymap.set("n", "N", "Nzzzv", { noremap = true, silent = true })
