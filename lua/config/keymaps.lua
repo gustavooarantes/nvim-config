@@ -27,11 +27,8 @@ vim.keymap.set("n", "<C-u>", "<C-u>zz", { noremap = true, silent = true })
 vim.keymap.set("n", "n", "nzzzv", { noremap = true, silent = true })
 vim.keymap.set("n", "N", "Nzzzv", { noremap = true, silent = true })
 
--- Open netrw anywhere with <leader>e
-vim.keymap.set("n", "<leader>e", vim.cmd.Ex, { desc = "Open netrw" })
-
 -- Mapeia Tab para ir para o PRÓXIMO BUFFER
-vim.api.nvim_set_keymap('n', '<Tab>', ':bnext<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<Tab>", ":bnext<CR>", { noremap = true, silent = true })
 
 -- Mapeia Shift-Tab para ir para o BUFFER ANTERIOR
-vim.api.nvim_set_keymap('n', '<S-Tab>', ':bprevious<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<S-Tab>", ":bprevious<CR>", { noremap = true, silent = true })

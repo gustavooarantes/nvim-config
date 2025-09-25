@@ -7,15 +7,6 @@
 -- Or remove existing autocmds by their group name (which is prefixed with `lazyvim_` for the defaults)
 -- e.g. vim.api.nvim_del_augroup_by_name("lazyvim_wrap_spell")
 
--- Enable relative numbers in netrw
-vim.api.nvim_create_autocmd("FileType", {
-  pattern = "netrw",
-  callback = function()
-    vim.opt_local.number = true -- enable absolute line numbers
-    vim.opt_local.relativenumber = true -- enable relative numbers
-  end,
-})
-
 -- Desabilita formatação automática dentro de ~/Supera e subdiretórios
 vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
   callback = function()
