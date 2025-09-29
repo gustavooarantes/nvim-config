@@ -26,9 +26,3 @@ vim.keymap.set("n", "<C-u>", "<C-u>zz", { noremap = true, silent = true })
 -- Center the cursor when navigating search results
 vim.keymap.set("n", "n", "nzzzv", { noremap = true, silent = true })
 vim.keymap.set("n", "N", "Nzzzv", { noremap = true, silent = true })
-
--- Mapeia Tab para ir para o PRÓXIMO BUFFER
-vim.api.nvim_set_keymap("n", "<Tab>", ":bnext<CR>", { noremap = true, silent = true })
-
--- Mapeia Shift-Tab para ir para o BUFFER ANTERIOR
-vim.api.nvim_set_keymap("n", "<S-Tab>", ":bprevious<CR>", { noremap = true, silent = true })
