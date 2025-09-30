@@ -1,5 +1,6 @@
 return {
-  "folke/tokyonight.nvim",
+  "rose-pine/neovim",
+  name = "rose-pine",
   lazy = false,
   priority = 1000,
   opts = {},
