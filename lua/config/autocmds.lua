@@ -23,13 +23,12 @@ vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
 -- Autocmd que formata no save (mas respeita o disable_autoformat)
 vim.api.nvim_create_autocmd("BufWritePre", {
   callback = function()
+    -- Se o disable_autoformat for true, saia
     if vim.b.disable_autoformat then
       return
     end
-    -- aqui chama o conform pra formatar o buffer
-    local ok, conform = pcall(require, "conform")
-    if ok then
-      conform.format({ async = true })
-    end
+
+    -- Use o utilitário de formatação da LazyVim, que já sabe como lidar com o conform
+    require("lazyvim.util.format").format()
   end,
 })
