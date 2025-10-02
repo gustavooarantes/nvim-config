@@ -1,52 +1,35 @@
+-- Return plugin specification for Lazy
 return {
   "stevearc/conform.nvim",
   opts = {
+    -- Define formatters by filetype
     formatters_by_ft = {
-      -- Java
-      java = { "google-java-format" },
-
-      -- Kotlin
-      kotlin = { "ktlint" },
-
-      -- Go
+      -- Go: format code and organize imports
       go = { "gofumpt", "goimports" },
 
-      -- PHP
-      php = { "php-cs-fixer" },
-
-      -- Python
+      -- Python: lint & format
       python = { "ruff" },
 
-      -- Ruby
-      ruby = { "rubocop" },
-
-      -- Shell
+      -- Shell scripting: sh, bash, zsh
       sh = { "shfmt" },
       bash = { "shfmt" },
       zsh = { "shfmt" },
 
-      -- Docker
+      -- Dockerfile formatting
       dockerfile = { "prettier" },
 
-      -- YAML / JSON / TOML
+      -- YAML / JSON / TOML formatting
       yaml = { "prettier" },
       json = { "prettier" },
       toml = { "taplo" },
 
-      -- C / C++ / ObjC
+      -- C / C++ / Objective-C formatting
       c = { "clang-format" },
       cpp = { "clang-format" },
       objc = { "clang-format" },
 
-      -- Lua
+      -- Lua formatting
       lua = { "stylua" },
-    },
-    formatters = {
-      ["php-cs-fixer"] = {
-        command = "php-cs-fixer",
-        args = { "fix", "--quiet", "$FILENAME" },
-        stdin = false, -- php-cs-fixer works in place
-      },
     },
   },
 }
