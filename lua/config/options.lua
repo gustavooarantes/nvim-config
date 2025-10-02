@@ -10,6 +10,7 @@ vim.opt.softtabstop = 2 -- Tab no insert = 4
 vim.opt.shiftround = true -- arredonda indent automático
 vim.opt.autoindent = true -- herda indent da linha acima
 vim.opt.smartindent = true -- indent inteligente pra código
+vim.opt.termguicolors = true
 
 -- SCROLLING
 vim.opt.scrolloff = 10 -- 10 linhas visíveis acima/abaixo do cursor
