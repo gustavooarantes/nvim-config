@@ -27,12 +27,6 @@ return {
       },
       -- Key mappings for completion menu
       mapping = {
-        ["<C-u>"] = cmp.mapping.scroll_docs(-4), -- Scroll docs up
-        ["<C-d>"] = cmp.mapping.scroll_docs(4), -- Scroll docs down
-        ["<C-Space>"] = cmp.mapping.complete(), -- Trigger completion manually
-        ["<C-e>"] = cmp.mapping.close(), -- Close completion menu
-        ["<CR>"] = cmp.mapping.confirm({ select = true }), -- Confirm selection
-
         -- Tab navigation for completion/snippets
         ["<Tab>"] = cmp.mapping(function(fallback)
           if cmp.visible() then

@@ -29,7 +29,29 @@ vim.keymap.set("n", "N", "Nzzzv", { noremap = true, silent = true })
 
 -- TELESCOPE
 local builtin = require("telescope.builtin")
+
+-- Live grep in current buffer
+vim.keymap.set("n", "<leader>fg", function()
+  require("telescope.builtin").current_buffer_fuzzy_find()
+end, { desc = "Search in current buffer" })
+
+-- Live grep in current project
+vim.keymap.set("n", "<leader>fG", function()
+  local git_root = vim.fn.systemlist("git rev-parse --show-toplevel")[1]
+  local cwd = vim.fn.empty(git_root) == 1 and vim.fn.getcwd() or git_root
+
+  if vim.fn.isdirectory(cwd) == 1 then
+    builtin.live_grep({ cwd = cwd })
+  else
+    vim.notify(
+      "Telescope: diretório inválido para live_grep.\nUsando cwd atual: " .. vim.fn.getcwd(),
+      vim.log.levels.WARN
+    )
+    builtin.live_grep({ cwd = vim.fn.getcwd() })
+  end
+end, { desc = "Live grep in project" })
+
+-- Other pickers
 vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "Telescope find files" })
-vim.keymap.set("n", "<leader>fg", builtin.live_grep, { desc = "Telescope live grep" })
 vim.keymap.set("n", "<leader>fb", builtin.buffers, { desc = "Telescope buffers" })
 vim.keymap.set("n", "<leader>fh", builtin.help_tags, { desc = "Telescope help tags" })
