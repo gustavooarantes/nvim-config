@@ -16,7 +16,7 @@ return {
       zsh = { "shfmt" },
 
       -- Dockerfile formatting
-      dockerfile = { "prettier" },
+      dockerfile = { "dockerls" },
 
       -- YAML / JSON / TOML formatting
       yaml = { "prettier" },

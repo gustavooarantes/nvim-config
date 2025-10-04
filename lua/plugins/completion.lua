@@ -27,6 +27,8 @@ return {
       },
       -- Key mappings for completion menu
       mapping = {
+        ["<CR>"] = cmp.mapping.confirm({ select = true }), -- Confirm selection
+
         -- Tab navigation for completion/snippets
         ["<Tab>"] = cmp.mapping(function(fallback)
           if cmp.visible() then
@@ -45,6 +47,14 @@ return {
             luasnip.jump(-1) -- Jump backwards in snippet
           else
             fallback() -- Default fallback behavior
+          end
+        end, { "i", "s" }),
+
+        ["<Esc>"] = cmp.mapping(function(fallback)
+          if cmp.visible() then
+            cmp.abort() -- Fecha o menu de completions
+          else
+            fallback() -- Deixa o ESC normal funcionar
           end
         end, { "i", "s" }),
       },
