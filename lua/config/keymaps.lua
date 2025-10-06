@@ -55,3 +55,14 @@ end, { desc = "Live grep in project" })
 vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "Telescope find files" })
 vim.keymap.set("n", "<leader>fb", builtin.buffers, { desc = "Telescope buffers" })
 vim.keymap.set("n", "<leader>fh", builtin.help_tags, { desc = "Telescope help tags" })
+
+-- Code Action (normal mode)
+vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { noremap = true, silent = true, desc = "LSP: Code Action" })
+
+-- JDT Restart (refresh workspace)
+vim.keymap.set(
+  "n",
+  "<leader>jr", -- "j" para JDT, "r" para restart
+  ":JdtRestart<CR>",
+  { noremap = true, silent = true, desc = "JDT: Restart Language Server" }
+)
