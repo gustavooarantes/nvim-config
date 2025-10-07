@@ -27,18 +27,34 @@ vim.keymap.set("n", "<C-u>", "<C-u>zz", { noremap = true, silent = true })
 vim.keymap.set("n", "n", "nzzzv", { noremap = true, silent = true })
 vim.keymap.set("n", "N", "Nzzzv", { noremap = true, silent = true })
 
+-- Split window management
+vim.keymap.set("n", "<leader>sv", "<C-w>v") -- split window vertically
+vim.keymap.set("n", "<leader>sh", "<C-w>s") -- split window horizontally
+vim.keymap.set("n", "<leader>se", "<C-w>=") -- make split windows equal width
+vim.keymap.set("n", "<leader>sx", ":close<CR>") -- close split window
+vim.keymap.set("n", "<leader>sj", "<C-w>-") -- make split window height shorter
+vim.keymap.set("n", "<leader>sk", "<C-w>+") -- make split windows height taller
+vim.keymap.set("n", "<leader>s>", "<C-w>>5") -- make split windows width bigger
+vim.keymap.set("n", "<leader>s<", "<C-w><5") -- make split windows width smaller
+
+-- Quickfix keymaps
+vim.keymap.set("n", "<leader>qo", ":copen<CR>") -- open quickfix list
+vim.keymap.set("n", "<leader>qf", ":cfirst<CR>") -- jump to first quickfix list item
+vim.keymap.set("n", "<leader>qn", ":cnext<CR>") -- jump to next quickfix list item
+vim.keymap.set("n", "<leader>qp", ":cprev<CR>") -- jump to prev quickfix list item
+vim.keymap.set("n", "<leader>ql", ":clast<CR>") -- jump to last quickfix list item
+vim.keymap.set("n", "<leader>qc", ":cclose<CR>") -- close quickfix list
+vim.keymap.set("n", "]q", ":cnext<CR>zz", { silent = true })
+vim.keymap.set("n", "[q", ":cprev<CR>zz", { silent = true })
+
 -- TELESCOPE
-local builtin = require("telescope.builtin")
-
--- Live grep in current buffer
-vim.keymap.set("n", "<leader>fg", function()
-  require("telescope.builtin").current_buffer_fuzzy_find()
-end, { desc = "Search in current buffer" })
-
--- Other pickers
-vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "Telescope find files" })
-vim.keymap.set("n", "<leader>fb", builtin.buffers, { desc = "Telescope buffers" })
-vim.keymap.set("n", "<leader>fh", builtin.help_tags, { desc = "Telescope help tags" })
+vim.keymap.set("n", "<leader>ff", require("telescope.builtin").find_files, {}) -- fuzzy find files in project
+vim.keymap.set("n", "<leader>fg", require("telescope.builtin").live_grep, {}) -- grep file contents in project
+vim.keymap.set("n", "<leader>fb", require("telescope.builtin").buffers, {}) -- fuzzy find open buffers
+vim.keymap.set("n", "<leader>fh", require("telescope.builtin").help_tags, {}) -- fuzzy find help tags
+vim.keymap.set("n", "<leader>fs", require("telescope.builtin").current_buffer_fuzzy_find, {}) -- fuzzy find in current file buffer
+vim.keymap.set("n", "<leader>fo", require("telescope.builtin").lsp_document_symbols, {}) -- fuzzy find LSP/class symbols
+vim.keymap.set("n", "<leader>fi", require("telescope.builtin").lsp_incoming_calls, {}) -- fuzzy find LSP/incoming calls
 
 -- Code Action (normal mode)
 vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { noremap = true, silent = true, desc = "LSP: Code Action" })
