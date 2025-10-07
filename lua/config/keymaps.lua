@@ -51,58 +51,46 @@ vim.keymap.set(
   { noremap = true, silent = true, desc = "JDT: Restart Language Server" }
 )
 
--- TELESCOPE: Find directories and cd (project aware)
-local pickers = require("telescope.pickers")
-local finders = require("telescope.finders")
-local actions = require("telescope.actions")
-local action_state = require("telescope.actions.state")
-local conf = require("telescope.config").values
-local lsp_util = require("lspconfig.util")
-
-local function find_project_directories()
-  local root = lsp_util.root_pattern(".git", "package.json", "pyproject.toml")(vim.fn.expand("%:p")) or vim.loop.cwd()
-
-  local fd_cmd = vim.fn.executable("fd") == 1 and "fd" or "find"
-  local cmd
-  if fd_cmd == "fd" then
-    cmd = { "fd", "--type", "d", "--hidden", "--follow", "--exclude", ".git", "--strip-cwd-prefix" }
-  else
-    cmd = { "find", ".", "-type", "d", "-not", "-path", "*/.git/*" }
-  end
-
-  pickers
-    .new({}, {
-      prompt_title = "Find directories",
-      finder = finders.new_oneshot_job(cmd, { cwd = root }),
-      sorter = conf.generic_sorter({}),
-      attach_mappings = function(prompt_bufnr, map)
-        actions.select_default:replace(function()
-          local selection = action_state.get_selected_entry()
-          actions.close(prompt_bufnr)
-
-          local dir = selection[1] or selection.value
-          if dir == "." then
-            dir = root
-          end
-
-          vim.cmd("cd " .. vim.fn.fnamemodify(dir, ":p"))
-          print("cwd -> " .. vim.loop.cwd())
-        end)
-        return true
-      end,
-    })
-    :find()
-end
-
--- Map to <leader>fd
-vim.keymap.set(
-  "n",
-  "<leader>fd",
-  find_project_directories,
-  { desc = "Telescope: Find directories (project root aware)" }
-)
+-- Recent Projects
+vim.keymap.set("n", "<leader>fp", function()
+  require("telescope").extensions.projects.projects()
+end, { noremap = true, silent = true, desc = "Telescope: Projects" })
 
 -- Rename class/method/variable or anything in the whole project (yeah suck it IntelliJ)
 vim.keymap.set("n", "<leader>rn", function()
   vim.lsp.buf.rename()
 end, { noremap = true, silent = true, desc = "Rename symbol via LSP" })
+
+-- DEBUG / DAP KEYMAPS
+local dap = require("dap")
+local dapui = require("dapui")
+local map_opts = { noremap = true, silent = true }
+
+-- Start/Continue
+vim.keymap.set("n", "<leader>Dc", function()
+  dap.continue()
+end, map_opts)
+-- Step Into
+vim.keymap.set("n", "<leader>Dsi", function()
+  dap.step_into()
+end, map_opts)
+-- Step Over
+vim.keymap.set("n", "<leader>Dso", function()
+  dap.step_over()
+end, map_opts)
+-- Step Out
+vim.keymap.set("n", "<leader>DsO", function()
+  dap.step_out()
+end, map_opts)
+-- Toggle Breakpoint
+vim.keymap.set("n", "<leader>Db", function()
+  dap.toggle_breakpoint()
+end, map_opts)
+-- Set Conditional Breakpoint
+vim.keymap.set("n", "<leader>DB", function()
+  dap.set_breakpoint(vim.fn.input("Breakpoint condition: "))
+end, map_opts)
+-- Toggle DAP UI
+vim.keymap.set("n", "<leader>Dt", function()
+  dapui.toggle()
+end, map_opts)
