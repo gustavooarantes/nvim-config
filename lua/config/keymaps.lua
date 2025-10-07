@@ -35,22 +35,6 @@ vim.keymap.set("n", "<leader>fg", function()
   require("telescope.builtin").current_buffer_fuzzy_find()
 end, { desc = "Search in current buffer" })
 
--- Live grep in current project
-vim.keymap.set("n", "<leader>fG", function()
-  local git_root = vim.fn.systemlist("git rev-parse --show-toplevel")[1]
-  local cwd = vim.fn.empty(git_root) == 1 and vim.fn.getcwd() or git_root
-
-  if vim.fn.isdirectory(cwd) == 1 then
-    builtin.live_grep({ cwd = cwd })
-  else
-    vim.notify(
-      "Telescope: diretório inválido para live_grep.\nUsando cwd atual: " .. vim.fn.getcwd(),
-      vim.log.levels.WARN
-    )
-    builtin.live_grep({ cwd = vim.fn.getcwd() })
-  end
-end, { desc = "Live grep in project" })
-
 -- Other pickers
 vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "Telescope find files" })
 vim.keymap.set("n", "<leader>fb", builtin.buffers, { desc = "Telescope buffers" })
@@ -65,4 +49,55 @@ vim.keymap.set(
   "<leader>jr",
   ":JdtRestart<CR>",
   { noremap = true, silent = true, desc = "JDT: Restart Language Server" }
+)
+
+-- TELESCOPE: Find directories and cd (project aware)
+local pickers = require("telescope.pickers")
+local finders = require("telescope.finders")
+local actions = require("telescope.actions")
+local action_state = require("telescope.actions.state")
+local conf = require("telescope.config").values
+local lsp_util = require("lspconfig.util")
+
+local function find_project_directories()
+  local root = lsp_util.root_pattern(".git", "package.json", "pyproject.toml")(vim.fn.expand("%:p")) or vim.loop.cwd()
+
+  local fd_cmd = vim.fn.executable("fd") == 1 and "fd" or "find"
+  local cmd
+  if fd_cmd == "fd" then
+    cmd = { "fd", "--type", "d", "--hidden", "--follow", "--exclude", ".git", "--strip-cwd-prefix" }
+  else
+    cmd = { "find", ".", "-type", "d", "-not", "-path", "*/.git/*" }
+  end
+
+  pickers
+    .new({}, {
+      prompt_title = "Find directories",
+      finder = finders.new_oneshot_job(cmd, { cwd = root }),
+      sorter = conf.generic_sorter({}),
+      attach_mappings = function(prompt_bufnr, map)
+        actions.select_default:replace(function()
+          local selection = action_state.get_selected_entry()
+          actions.close(prompt_bufnr)
+
+          local dir = selection[1] or selection.value
+          if dir == "." then
+            dir = root
+          end
+
+          vim.cmd("cd " .. vim.fn.fnamemodify(dir, ":p"))
+          print("cwd -> " .. vim.loop.cwd())
+        end)
+        return true
+      end,
+    })
+    :find()
+end
+
+-- Map to <leader>fd
+vim.keymap.set(
+  "n",
+  "<leader>fd",
+  find_project_directories,
+  { desc = "Telescope: Find directories (project root aware)" }
 )

@@ -21,7 +21,7 @@ return {
     local lspconfig = require("lspconfig")
     local lsp_capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-    local lsp_attach = function(client, bufnr)
+    local lsp_attach = function(_client, _bufnr)
       -- your keybindings / custom buffer-local setup here
     end
 
@@ -52,12 +52,8 @@ return {
         "gradle_ls",
       },
 
-      --------------------------------------------------------------------
-      -- 🧠 Modern API: use 'handlers' instead of setup_handlers()
-      --------------------------------------------------------------------
       handlers = {
         function(server_name)
-          -- Skip JDTLS (it's configured separately)
           if server_name ~= "jdtls" then
             lspconfig[server_name].setup({
               on_attach = lsp_attach,
@@ -123,13 +119,42 @@ return {
     })
 
     ------------------------------------------------------------------------
-    -- Global floating window style
+    -- Diagnostics global setup (virtual text + signs + floating)
     ------------------------------------------------------------------------
-    local open_floating_preview = vim.lsp.util.open_floating_preview
-    function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
-      opts = opts or {}
-      opts.border = opts.border or "rounded"
-      return open_floating_preview(contents, syntax, opts, ...)
+    vim.diagnostic.config({
+      virtual_text = {
+        prefix = "●", -- ícone no final da linha
+        spacing = 2,
+      },
+      signs = true,
+      underline = true,
+      severity_sort = true,
+      update_in_insert = false,
+    })
+
+    -- Sinais customizados
+    local signs = { Error = "", Warn = "", Hint = "", Info = "" }
+    for type, icon in pairs(signs) do
+      local hl = "DiagnosticSign" .. type
+      vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
     end
+
+    -- Floating window customizada
+    if not vim.lsp.util._original_open_floating_preview then
+      vim.lsp.util._original_open_floating_preview = vim.lsp.util.open_floating_preview
+      function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
+        opts = opts or {}
+        opts.border = opts.border or "rounded"
+        opts.focusable = false
+        return vim.lsp.util._original_open_floating_preview(contents, syntax, opts, ...)
+      end
+    end
+
+    -- Mostrar floating ao passar o cursor
+    vim.api.nvim_create_autocmd("CursorHold", {
+      callback = function()
+        vim.diagnostic.open_float(nil, { focusable = false, border = "rounded" })
+      end,
+    })
   end,
 }
