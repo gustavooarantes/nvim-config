@@ -59,10 +59,10 @@ vim.keymap.set("n", "<leader>fh", builtin.help_tags, { desc = "Telescope help ta
 -- Code Action (normal mode)
 vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { noremap = true, silent = true, desc = "LSP: Code Action" })
 
--- JDT Restart (refresh workspace)
+-- JDT Restart
 vim.keymap.set(
   "n",
-  "<leader>jr", -- "j" para JDT, "r" para restart
+  "<leader>jr",
   ":JdtRestart<CR>",
   { noremap = true, silent = true, desc = "JDT: Restart Language Server" }
 )
