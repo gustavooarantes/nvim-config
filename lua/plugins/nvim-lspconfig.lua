@@ -121,17 +121,6 @@ return {
     ------------------------------------------------------------------------
     -- Diagnostics global setup (virtual text + signs + floating)
     ------------------------------------------------------------------------
-    vim.diagnostic.config({
-      virtual_text = {
-        prefix = "●", -- ícone no final da linha
-        spacing = 2,
-      },
-      signs = true,
-      underline = true,
-      severity_sort = true,
-      update_in_insert = false,
-    })
-
     -- Sinais customizados
     local signs = { Error = "", Warn = "", Hint = "", Info = "" }
     for type, icon in pairs(signs) do

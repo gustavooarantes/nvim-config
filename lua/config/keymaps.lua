@@ -101,3 +101,8 @@ vim.keymap.set(
   find_project_directories,
   { desc = "Telescope: Find directories (project root aware)" }
 )
+
+-- Rename class/method/variable or anything in the whole project (yeah suck it IntelliJ)
+vim.keymap.set("n", "<leader>rn", function()
+  vim.lsp.buf.rename()
+end, { noremap = true, silent = true, desc = "Rename symbol via LSP" })
