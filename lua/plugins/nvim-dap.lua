@@ -78,32 +78,6 @@ return {
     dap.configurations.c = dap.configurations.cpp
     dap.configurations.rust = dap.configurations.cpp
 
-    ---------------------------
-    -- Java
-    ---------------------------
-    dap.adapters.java = function(callback)
-      callback({
-        type = "server",
-        host = "127.0.0.1",
-        port = 5005,
-      })
-    end
-
-    dap.configurations.java = {
-      {
-        type = "java",
-        request = "launch",
-        name = "Launch Java Program",
-        mainClass = function()
-          return vim.fn.input("Main class > ")
-        end,
-        projectName = function()
-          return vim.fn.fnamemodify(vim.fn.getcwd(), ":p:h:t")
-        end,
-      },
-    }
-
-    ---------------------------
     -- Elixir
     ---------------------------
     dap.adapters.mix_task = {
