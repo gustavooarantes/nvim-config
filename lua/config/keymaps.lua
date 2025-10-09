@@ -128,3 +128,29 @@ vim.keymap.set("n", "<leader>gp", "<cmd>lua vim.diagnostic.goto_prev()<CR>")
 vim.keymap.set("n", "<leader>gn", "<cmd>lua vim.diagnostic.goto_next()<CR>")
 vim.keymap.set("n", "<leader>tr", "<cmd>lua vim.lsp.buf.document_symbol()<CR>")
 vim.keymap.set("i", "<C-Space>", "<cmd>lua vim.lsp.buf.completion()<CR>")
+
+-- NEOTEST
+
+vim.keymap.set("n", "<leader>tj", function()
+  vim.cmd("!./mvnw clean test-compile")
+end, { noremap = true, silent = true, desc = "Compile Java tests" })
+
+-- Run nearest test
+vim.keymap.set("n", "<leader>tn", function()
+  require("neotest").run.run()
+end, { noremap = true, silent = true, desc = "Run nearest test" })
+
+-- Run all tests in the current file
+vim.keymap.set("n", "<leader>tf", function()
+  require("neotest").run.run(vim.fn.expand("%"))
+end, { noremap = true, silent = true, desc = "Run file tests" })
+
+-- Toggle test output panel
+vim.keymap.set("n", "<leader>to", function()
+  require("neotest").output_panel.toggle()
+end, { noremap = true, silent = true, desc = "Toggle test output" })
+
+-- Run full test suite
+vim.keymap.set("n", "<leader>ta", function()
+  require("neotest").run.run({ suite = true })
+end, { noremap = true, silent = true, desc = "Run full suite" })

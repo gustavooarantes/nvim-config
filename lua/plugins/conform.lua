@@ -30,6 +30,11 @@ return {
 
       -- Lua formatting
       lua = { "stylua" },
+      -- Others
+      html = { "prettier" },
+      css = { "prettier" },
+      javascript = { "prettier" },
+      typescript = { "prettier" },
     },
   },
 }
