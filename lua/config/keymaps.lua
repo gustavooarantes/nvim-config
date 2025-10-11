@@ -34,8 +34,8 @@ vim.keymap.set("n", "<leader>se", "<C-w>=") -- make split windows equal width
 vim.keymap.set("n", "<leader>sx", ":close<CR>") -- close split window
 vim.keymap.set("n", "<leader>sj", "<C-w>-") -- make split window height shorter
 vim.keymap.set("n", "<leader>sk", "<C-w>+") -- make split windows height taller
-vim.keymap.set("n", "<leader>s>", "<C-w>>5") -- make split windows width bigger
-vim.keymap.set("n", "<leader>s<", "<C-w><5") -- make split windows width smaller
+vim.keymap.set("n", "<leader>s>", "<C-w>>10") -- make split windows width bigger
+vim.keymap.set("n", "<leader>s<", "<C-w><10") -- make split windows width smaller
 
 -- Quickfix keymaps
 vim.keymap.set("n", "<leader>qo", ":copen<CR>") -- open quickfix list
@@ -59,13 +59,33 @@ vim.keymap.set("n", "<leader>fi", require("telescope.builtin").lsp_incoming_call
 -- Code Action (normal mode)
 vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { noremap = true, silent = true, desc = "LSP: Code Action" })
 
--- JDT Restart
-vim.keymap.set(
-  "n",
-  "<leader>jr",
-  ":JdtRestart<CR>",
-  { noremap = true, silent = true, desc = "JDT: Restart Language Server" }
-)
+-- ====================================================
+-- Reload / Restart utilities
+-- ====================================================
+
+-- Reload all buffers and refresh NvimTree
+vim.keymap.set("n", "<leader>rb", function()
+  vim.cmd("bufdo e!")
+
+  local ok, nvim_tree_api = pcall(require, "nvim-tree.api")
+  if ok and nvim_tree_api.tree.is_visible() then
+    nvim_tree_api.tree.reload()
+  end
+
+  vim.notify("Reloading buffers...", vim.log.levels.INFO)
+end, { noremap = true, silent = true, desc = "Reload buffers and refresh NvimTree" })
+
+-- Restart JDT Language Server
+vim.keymap.set("n", "<leader>rj", function()
+  vim.cmd("JdtRestart")
+  vim.notify("Restarting JDT Language Server...", vim.log.levels.INFO)
+end, { noremap = true, silent = true, desc = "Restart JDT Language Server" })
+
+-- Restart LSPs
+vim.keymap.set("n", "<leader>rl", function()
+  vim.cmd("LspRestart")
+  vim.notify("Reloading LSPs...", vim.log.levels.INFO)
+end, { noremap = true, silent = true, desc = "Restart all LSP servers" })
 
 -- Recent Projects
 vim.keymap.set("n", "<leader>fp", function()

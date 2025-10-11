@@ -1,7 +1,7 @@
 return {
   "nvim-tree/nvim-tree.lua",
   dependencies = { "nvim-tree/nvim-web-devicons" },
-  cmd = "NvimTreeToggle", -- garante que o comando exista
+  cmd = "NvimTreeToggle",
   opts = {
     actions = {
       open_file = { window_picker = { enable = false } },
