@@ -30,7 +30,7 @@ return {
       }
       vim.list_extend(
         bundles,
-        vim.split(vim.fn.glob(home .. "/.local/share/nvim/mason/share/java-test/*.jar", 1), "\n")
+        vim.split(vim.fn.glob(home .. "/.local/share/nvim/mason/share/java-test/*.jar", true), "\n")
       )
 
       -- Root dir detection
