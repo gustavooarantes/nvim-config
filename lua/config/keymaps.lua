@@ -75,11 +75,22 @@ vim.keymap.set("n", "<leader>rb", function()
   vim.notify("Reloading buffers...", vim.log.levels.INFO)
 end, { noremap = true, silent = true, desc = "Reload buffers and refresh NvimTree" })
 
--- Restart JDT Language Server
+-- Restart Java Workspace
 vim.keymap.set("n", "<leader>rj", function()
-  vim.cmd("JdtRestart")
-  vim.notify("Restarting JDT Language Server...", vim.log.levels.INFO)
-end, { noremap = true, silent = true, desc = "Restart JDT Language Server" })
+  local ok, jdtls = pcall(require, "jdtls")
+  if not ok then
+    vim.notify("JDTLS not available in this buffer", vim.log.levels.WARN)
+    return
+  end
+
+  vim.notify("Updating JDTLS project config...", vim.log.levels.INFO)
+  jdtls.update_project_config()
+
+  vim.defer_fn(function()
+    vim.cmd("JdtRestart")
+    vim.notify("JDTLS restarted with updated workspace", vim.log.levels.INFO)
+  end, 1000)
+end, { noremap = true, silent = true, desc = "Full JDTLS reload with config update" })
 
 -- Restart LSPs
 vim.keymap.set("n", "<leader>rl", function()
