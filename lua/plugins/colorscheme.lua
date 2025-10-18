@@ -1,23 +1,8 @@
 return {
-  "rose-pine/neovim",
-  name = "rose-pine",
+  "ellisonleao/gruvbox.nvim",
+  name = "gruvbox",
   config = function()
-    require("rose-pine").setup({
-      variant = "main",
-      dark_variant = "main",
-      styles = { bold = true, italic = true, transparency = true },
-      groups = {
-        border = "muted",
-        link = "iris",
-        panel = "surface",
-        error = "love",
-        hint = "iris",
-        info = "foam",
-        note = "pine",
-        todo = "rose",
-        warn = "gold",
-      },
-    })
-    vim.cmd("colorscheme rose-pine-main")
+    vim.o.background = "dark"
+    vim.cmd("colorscheme gruvbox")
   end,
 }
