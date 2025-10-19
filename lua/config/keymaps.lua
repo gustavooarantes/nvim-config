@@ -65,15 +65,26 @@ vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { noremap = true, sil
 
 -- Reload all buffers and refresh NvimTree
 vim.keymap.set("n", "<leader>rb", function()
-  vim.cmd("bufdo e!")
+  for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+    local buftype = vim.bo[buf].buftype
+    local modified = vim.bo[buf].modified
 
+    -- Only reload normal buffers that are not modified
+    if buftype == "" and not modified then
+      vim.api.nvim_buf_call(buf, function()
+        vim.cmd("e") -- reload from disk
+      end)
+    end
+  end
+
+  -- Refresh NvimTree if visible
   local ok, nvim_tree_api = pcall(require, "nvim-tree.api")
   if ok and nvim_tree_api.tree.is_visible() then
     nvim_tree_api.tree.reload()
   end
 
-  vim.notify("Reloading buffers...", vim.log.levels.INFO)
-end, { noremap = true, silent = true, desc = "Reload buffers and refresh NvimTree" })
+  vim.notify("Reloaded buffers safely!", vim.log.levels.INFO)
+end, { noremap = true, silent = true, desc = "Reload buffers safely and refresh NvimTree" })
 
 -- Restart Java Workspace
 vim.keymap.set("n", "<leader>rj", function()
