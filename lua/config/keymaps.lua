@@ -79,18 +79,30 @@ end, { noremap = true, silent = true, desc = "Reload buffers and refresh NvimTre
 vim.keymap.set("n", "<leader>rj", function()
   local ok, jdtls = pcall(require, "jdtls")
   if not ok then
-    vim.notify("JDTLS not available in this buffer", vim.log.levels.WARN)
+    vim.notify("JDTLS não disponível neste buffer", vim.log.levels.WARN)
     return
   end
 
-  vim.notify("Updating JDTLS project config...", vim.log.levels.INFO)
-  jdtls.update_project_config()
+  local home = vim.env.HOME
+  local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ":p:h:t")
+  local workspace_dir = home .. "/jdtls-workspace/" .. project_name
 
+  if vim.fn.isdirectory(workspace_dir) == 1 then
+    vim.notify("Removendo workspace JDTLS: " .. workspace_dir, vim.log.levels.WARN)
+    vim.fn.delete(workspace_dir, "rf")
+  else
+    vim.notify("Workspace JDTLS não encontrado, pulando remoção", vim.log.levels.INFO)
+  end
+
+  vim.cmd("wall")
   vim.defer_fn(function()
+    pcall(function()
+      jdtls.update_project_config()
+    end)
     vim.cmd("JdtRestart")
-    vim.notify("JDTLS restarted with updated workspace", vim.log.levels.INFO)
-  end, 1000)
-end, { noremap = true, silent = true, desc = "Full JDTLS reload with config update" })
+    vim.notify("JDTLS reiniciado com workspace limpo", vim.log.levels.INFO)
+  end, 500)
+end, { noremap = true, silent = true, desc = "Hard reset JDTLS (workspace clean)" })
 
 -- Restart LSPs
 vim.keymap.set("n", "<leader>rl", function()
