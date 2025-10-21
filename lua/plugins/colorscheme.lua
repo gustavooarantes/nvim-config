@@ -1,9 +1,8 @@
 return {
-  "folke/tokyonight.nvim",
-  name = "tokyonight",
-  config = function()
-    vim.o.background = "dark"
-    vim.g.tokyonight_style = "night"
-    vim.cmd("colorscheme tokyonight-night")
-  end,
+	"ellisonleao/gruvbox.nvim",
+	name = "gruvbox",
+	config = function()
+		vim.o.background = "dark"
+		vim.cmd("colorscheme gruvbox")
+	end,
 }

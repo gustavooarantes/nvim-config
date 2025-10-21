@@ -1,40 +1,61 @@
--- Return plugin specification for Lazy
 return {
   "stevearc/conform.nvim",
   opts = {
-    -- Define formatters by filetype
+    formatters = {
+      my_clang_format = {
+        command = "clang-format",
+        args = {
+          '--style={BasedOnStyle: "Google", IndentWidth: 2, BreakBeforeBraces: "Attach", AllowShortFunctionsOnASingleLine: "None", ColumnLimit: 100}',
+        },
+      },
+
+      my_prettier = {
+        command = "prettier",
+        args = {
+          "--print-width",
+          "80",
+          "--tab-width",
+          "2",
+          "--use-tabs",
+          "false",
+          "--semi",
+          "true",
+          "--single-quote",
+          "false",
+          "--trailing-comma",
+          "es5",
+        },
+      },
+
+      my_ruff = {
+        command = "ruff",
+        args = { "format", "--line-length", "88" },
+      },
+
+      my_shfmt = {
+        command = "shfmt",
+        args = { "-i", "2" },
+      },
+    },
+
     formatters_by_ft = {
-      -- Go: format code and organize imports
       go = { "gofumpt", "goimports" },
-
-      -- Python: lint & format
-      python = { "ruff" },
-
-      -- Shell scripting: sh, bash, zsh
-      sh = { "shfmt" },
-      bash = { "shfmt" },
-      zsh = { "shfmt" },
-
-      -- Dockerfile formatting
       dockerfile = { "dockerls" },
-
-      -- YAML / JSON / TOML formatting
-      yaml = { "prettier" },
-      json = { "prettier" },
       toml = { "taplo" },
 
-      -- C / C++ / Objective-C formatting
-      c = { "clang-format" },
-      cpp = { "clang-format" },
-      objc = { "clang-format" },
-
-      -- Lua formatting
-      lua = { "stylua" },
-      -- Others
-      html = { "prettier" },
-      css = { "prettier" },
-      javascript = { "prettier" },
-      typescript = { "prettier" },
+      python = { "my_ruff" },
+      sh = { "my_shfmt" },
+      bash = { "my_shfmt" },
+      zsh = { "my_shfmt" },
+      c = { "my_clang_format" },
+      cpp = { "my_clang_format" },
+      lua = { "my_stylua" },
+      html = { "my_prettier" },
+      css = { "my_prettier" },
+      javascript = { "my_prettier" },
+      typescript = { "my_prettier" },
+      json = { "my_prettier" },
+      yaml = { "my_prettier" },
     },
   },
 }

@@ -8,6 +8,7 @@ vim.opt.mouse = ""
 -- Line Numbers
 vim.opt.relativenumber = true
 vim.opt.number = true
+vim.opt.numberwidth = 4
 
 -- TAB / INDENT CONFIG
 vim.opt.expandtab = false -- uses true tabs (\t)
