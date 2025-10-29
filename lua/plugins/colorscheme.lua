@@ -11,9 +11,6 @@ return {
 		vim.defer_fn(function()
 			local black = "#000000"
 
-			-- Adjusting the selection background in completion menus
-			vim.api.nvim_set_hl(0, "PmenuSel", { bg = "#373737" })
-
 			-- Core windows
 			vim.api.nvim_set_hl(0, "Normal", { bg = black })
 			vim.api.nvim_set_hl(0, "NormalNC", { bg = black })
@@ -26,7 +23,7 @@ return {
 			vim.api.nvim_set_hl(0, "NormalFloat", { bg = black })
 			vim.api.nvim_set_hl(0, "FloatBorder", { bg = black, fg = black })
 			vim.api.nvim_set_hl(0, "Pmenu", { bg = black })
-			vim.api.nvim_set_hl(0, "PmenuSel", { bg = black })
+			vim.api.nvim_set_hl(0, "PmenuSel", { bg = "#373737" })
 			vim.api.nvim_set_hl(0, "TelescopeNormal", { bg = black })
 			vim.api.nvim_set_hl(0, "TelescopeBorder", { bg = black, fg = black })
 			vim.api.nvim_set_hl(0, "TelescopePromptNormal", { bg = black })
