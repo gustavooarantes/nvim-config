@@ -1,24 +1,19 @@
 return {
-	"EdenEast/nightfox.nvim",
-	name = "carbonfox",
+	"nyoom-engineering/oxocarbon.nvim",
+	name = "oxocarbon",
 	lazy = false,
 	priority = 1000,
 	config = function()
-		require("nightfox").setup({
-			options = {
-				transparent = false, -- solid background
-				dim_inactive = false, -- keep all windows same brightness
-				styles = { all = "NONE" },
-			},
-		})
-
-		-- Load Carbonfox first
-		vim.cmd("colorscheme carbonfox")
 		vim.opt.background = "dark"
+		vim.cmd("colorscheme oxocarbon")
 
 		-- Apply pitch-black background globally
 		vim.defer_fn(function()
 			local black = "#000000"
+
+			-- Adjusting the selection background in completion menus
+			vim.api.nvim_set_hl(0, "PmenuSel", { bg = "#373737" })
+
 			-- Core windows
 			vim.api.nvim_set_hl(0, "Normal", { bg = black })
 			vim.api.nvim_set_hl(0, "NormalNC", { bg = black })
@@ -31,7 +26,15 @@ return {
 			vim.api.nvim_set_hl(0, "NormalFloat", { bg = black })
 			vim.api.nvim_set_hl(0, "FloatBorder", { bg = black, fg = black })
 			vim.api.nvim_set_hl(0, "Pmenu", { bg = black })
-			vim.api.nvim_set_hl(0, "PmenuSel", { bg = "#323232" })
+			vim.api.nvim_set_hl(0, "PmenuSel", { bg = black })
+			vim.api.nvim_set_hl(0, "TelescopeNormal", { bg = black })
+			vim.api.nvim_set_hl(0, "TelescopeBorder", { bg = black, fg = black })
+			vim.api.nvim_set_hl(0, "TelescopePromptNormal", { bg = black })
+			vim.api.nvim_set_hl(0, "TelescopePromptBorder", { bg = black, fg = black })
+			vim.api.nvim_set_hl(0, "TelescopePreviewNormal", { bg = black })
+			vim.api.nvim_set_hl(0, "TelescopePreviewBorder", { bg = black, fg = black })
+			vim.api.nvim_set_hl(0, "TelescopeResultsNormal", { bg = black })
+			vim.api.nvim_set_hl(0, "TelescopeResultsBorder", { bg = black, fg = black })
 		end, 0)
 	end,
 }
