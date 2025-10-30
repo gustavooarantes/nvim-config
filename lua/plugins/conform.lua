@@ -9,24 +9,6 @@ return {
 				},
 			},
 
-			my_prettier = {
-				command = "prettier",
-				args = {
-					"--print-width",
-					"80",
-					"--tab-width",
-					"2",
-					"--use-tabs",
-					"false",
-					"--semi",
-					"true",
-					"--single-quote",
-					"false",
-					"--trailing-comma",
-					"es5",
-				},
-			},
-
 			my_ruff = {
 				command = "ruff",
 				args = { "format", "--line-length", "88" },
@@ -50,12 +32,6 @@ return {
 			c = { "my_clang_format" },
 			cpp = { "my_clang_format" },
 			lua = { "my_stylua" },
-			html = { "my_prettier" },
-			css = { "my_prettier" },
-			javascript = { "my_prettier" },
-			typescript = { "my_prettier" },
-			json = { "my_prettier" },
-			yaml = { "my_prettier" },
 		},
 	},
 }

@@ -11,12 +11,12 @@ vim.opt.number = true
 vim.opt.numberwidth = 4
 
 -- TAB / INDENT CONFIG
-vim.opt.expandtab = false -- uses true tabs (\t)
-vim.opt.tabstop = 2 -- 1 tab = 4 spaces visually
-vim.opt.shiftwidth = 2 -- auto-indent = 4
-vim.opt.softtabstop = 2 -- Tab on insert = 4
-vim.opt.shiftround = true -- automatically rounds indent
-vim.opt.autoindent = true -- inherits from above line
+vim.opt.expandtab = true   -- uses spaces instead of \t
+vim.opt.tabstop = 2        -- 1 tab = 4 spaces visually
+vim.opt.shiftwidth = 2     -- auto-indent = 4
+vim.opt.softtabstop = 2    -- Tab on insert = 4
+vim.opt.shiftround = true  -- automatically rounds indent
+vim.opt.autoindent = true  -- inherits from above line
 vim.opt.smartindent = true -- smart indent
 
 -- Split Windows
@@ -33,3 +33,8 @@ vim.opt.cursorline = true
 vim.opt.foldlevel = 20
 vim.opt.foldmethod = "expr"
 vim.opt.foldexpr = "nvim_treesitter#foldexpr()" -- Utilize Treesitter folds
+
+-- Better searching
+vim.opt.ignorecase = true
+vim.opt.smartcase = true
+vim.opt.incsearch = true
