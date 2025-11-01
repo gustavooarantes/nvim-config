@@ -1,15 +1,10 @@
 -- lua/theme/colorscheme.lua
 return {
-  "EdenEast/nightfox.nvim",
+  "catppuccin/nvim",
+  name = "catppuccin",
   lazy = false,
   priority = 1000,
   config = function()
-    require("nightfox").setup({
-      options = {
-        transparent = false,
-        terminal_colors = true,
-      },
-    })
-    vim.cmd("colorscheme nightfox")
+    vim.cmd.colorscheme("catppuccin-frappe")
   end,
 }
