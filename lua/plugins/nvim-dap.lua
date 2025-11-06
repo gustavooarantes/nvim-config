@@ -31,7 +31,7 @@ return {
     ---------------------------
     dap.adapters.python = {
       type = "executable",
-      command = "python",
+      command = "/usr/bin/python3", -- garante o Python correto
       args = { "-m", "debugpy.adapter" },
     }
 
@@ -42,6 +42,12 @@ return {
         name = "Launch file",
         program = "${file}",
         pythonPath = function()
+          -- Detecta virtualenv local
+          local venv_path = vim.fn.getcwd() .. "/.venv/bin/python"
+          if vim.fn.filereadable(venv_path) == 1 then
+            return venv_path
+          end
+          -- Fallback para Python global
           return "/usr/bin/python3"
         end,
       },
@@ -53,7 +59,7 @@ return {
     dap.adapters.cppdbg = {
       id = "cppdbg",
       type = "executable",
-      command = "OpenDebugAD7", -- installed by Mason
+      command = "OpenDebugAD7", -- instalado pelo Mason
     }
 
     dap.adapters.lldb = {
@@ -78,6 +84,7 @@ return {
     dap.configurations.c = dap.configurations.cpp
     dap.configurations.rust = dap.configurations.cpp
 
+    ---------------------------
     -- Elixir
     ---------------------------
     dap.adapters.mix_task = {
