@@ -28,33 +28,33 @@ vim.keymap.set("n", "n", "nzzzv", { noremap = true, silent = true })
 vim.keymap.set("n", "N", "Nzzzv", { noremap = true, silent = true })
 
 -- Split window management
-vim.keymap.set("n", "<leader>sv", "<C-w>v") -- split window vertically
-vim.keymap.set("n", "<leader>sh", "<C-w>s") -- split window horizontally
-vim.keymap.set("n", "<leader>se", "<C-w>=") -- make split windows equal width
+vim.keymap.set("n", "<leader>sv", "<C-w>v")     -- split window vertically
+vim.keymap.set("n", "<leader>sh", "<C-w>s")     -- split window horizontally
+vim.keymap.set("n", "<leader>se", "<C-w>=")     -- make split windows equal width
 vim.keymap.set("n", "<leader>sx", ":close<CR>") -- close split window
-vim.keymap.set("n", "<leader>sj", "<C-w>-") -- make split window height shorter
-vim.keymap.set("n", "<leader>sk", "<C-w>+") -- make split windows height taller
-vim.keymap.set("n", "<leader>s>", "<C-w>>10") -- make split windows width bigger
-vim.keymap.set("n", "<leader>s<", "<C-w><10") -- make split windows width smaller
+vim.keymap.set("n", "<leader>sj", "<C-w>-")     -- make split window height shorter
+vim.keymap.set("n", "<leader>sk", "<C-w>+")     -- make split windows height taller
+vim.keymap.set("n", "<leader>s>", "<C-w>>10")   -- make split windows width bigger
+vim.keymap.set("n", "<leader>s<", "<C-w><10")   -- make split windows width smaller
 
 -- Quickfix keymaps
-vim.keymap.set("n", "<leader>qo", ":copen<CR>") -- open quickfix list
+vim.keymap.set("n", "<leader>qo", ":copen<CR>")  -- open quickfix list
 vim.keymap.set("n", "<leader>qf", ":cfirst<CR>") -- jump to first quickfix list item
-vim.keymap.set("n", "<leader>qn", ":cnext<CR>") -- jump to next quickfix list item
-vim.keymap.set("n", "<leader>qp", ":cprev<CR>") -- jump to prev quickfix list item
-vim.keymap.set("n", "<leader>ql", ":clast<CR>") -- jump to last quickfix list item
+vim.keymap.set("n", "<leader>qn", ":cnext<CR>")  -- jump to next quickfix list item
+vim.keymap.set("n", "<leader>qp", ":cprev<CR>")  -- jump to prev quickfix list item
+vim.keymap.set("n", "<leader>ql", ":clast<CR>")  -- jump to last quickfix list item
 vim.keymap.set("n", "<leader>qc", ":cclose<CR>") -- close quickfix list
 vim.keymap.set("n", "]q", ":cnext<CR>zz", { silent = true })
 vim.keymap.set("n", "[q", ":cprev<CR>zz", { silent = true })
 
 -- TELESCOPE
-vim.keymap.set("n", "<leader>ff", require("telescope.builtin").find_files, {}) -- fuzzy find files in project
-vim.keymap.set("n", "<leader>fg", require("telescope.builtin").live_grep, {}) -- grep file contents in project
-vim.keymap.set("n", "<leader>fb", require("telescope.builtin").buffers, {}) -- fuzzy find open buffers
-vim.keymap.set("n", "<leader>fh", require("telescope.builtin").help_tags, {}) -- fuzzy find help tags
+vim.keymap.set("n", "<leader>ff", require("telescope.builtin").find_files, {})                -- fuzzy find files in project
+vim.keymap.set("n", "<leader>fg", require("telescope.builtin").live_grep, {})                 -- grep file contents in project
+vim.keymap.set("n", "<leader>fb", require("telescope.builtin").buffers, {})                   -- fuzzy find open buffers
+vim.keymap.set("n", "<leader>fh", require("telescope.builtin").help_tags, {})                 -- fuzzy find help tags
 vim.keymap.set("n", "<leader>fs", require("telescope.builtin").current_buffer_fuzzy_find, {}) -- fuzzy find in current file buffer
-vim.keymap.set("n", "<leader>fo", require("telescope.builtin").lsp_document_symbols, {}) -- fuzzy find LSP/class symbols
-vim.keymap.set("n", "<leader>fi", require("telescope.builtin").lsp_incoming_calls, {}) -- fuzzy find LSP/incoming calls
+vim.keymap.set("n", "<leader>fo", require("telescope.builtin").lsp_document_symbols, {})      -- fuzzy find LSP/class symbols
+vim.keymap.set("n", "<leader>fi", require("telescope.builtin").lsp_incoming_calls, {})        -- fuzzy find LSP/incoming calls
 
 -- Code Action (normal mode)
 vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { noremap = true, silent = true, desc = "LSP: Code Action" })
@@ -208,3 +208,40 @@ end, { noremap = true, silent = true, desc = "Toggle test output" })
 vim.keymap.set("n", "<leader>ta", function()
   require("neotest").run.run({ suite = true })
 end, { noremap = true, silent = true, desc = "Run full suite" })
+
+-- TROUBLE
+vim.keymap.set("n", "<leader>xx", "<cmd>Trouble diagnostics toggle<CR>", {
+  noremap = true,
+  silent = true,
+  desc = "Toggle Trouble diagnostics",
+})
+
+vim.keymap.set("n", "<leader>xq", "<cmd>Trouble quickfix toggle<CR>", {
+  noremap = true,
+  silent = true,
+  desc = "Toggle Trouble Quickfix list",
+})
+
+vim.keymap.set("n", "<leader>xr", "<cmd>Trouble lsp_references toggle<CR>", {
+  noremap = true,
+  silent = true,
+  desc = "Toggle Trouble LSP references",
+})
+
+vim.keymap.set("n", "<leader>xs", "<cmd>Trouble symbols toggle focus=false<CR>", {
+  noremap = true,
+  silent = true,
+  desc = "Toggle Trouble document symbols",
+})
+
+vim.keymap.set("n", "[t", "<cmd>Trouble prev<CR>", {
+  noremap = true,
+  silent = true,
+  desc = "Go to previous Trouble item",
+})
+
+vim.keymap.set("n", "]t", "<cmd>Trouble next<CR>", {
+  noremap = true,
+  silent = true,
+  desc = "Go to next Trouble item",
+})

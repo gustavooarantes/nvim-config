@@ -1,15 +1,46 @@
 return {
-  "rose-pine/neovim",
-  name = "rose-pine",
-  lazy = false,
-  priority = 1000,
-  opts = {
-    variant = "main",
-    dark_variant = "main",
-    disable_background = true,
+  {
+    "LazyVim/LazyVim",
+    opts = {
+      colorscheme = "catppuccin",
+    },
   },
-  config = function(_, opts)
-    require("rose-pine").setup(opts)
-    vim.cmd("colorscheme rose-pine")
-  end,
+  {
+    "catppuccin/nvim",
+    name = "catppuccin",
+    opts = {
+      term_colors = true,
+      transparent_background = false,
+      styles = {
+        comments = {},
+        conditionals = {},
+        loops = {},
+        functions = {},
+        keywords = {},
+        strings = {},
+        variables = {},
+        numbers = {},
+        booleans = {},
+        properties = {},
+        types = {},
+      },
+      color_overrides = {
+        mocha = {
+          base = "#000000",
+          mantle = "#000000",
+          crust = "#000000",
+        },
+      },
+      integrations = {
+        telescope = {
+          enabled = true,
+          style = "nvchad",
+        },
+        dropbar = {
+          enabled = true,
+          color_mode = true,
+        },
+      },
+    },
+  },
 }

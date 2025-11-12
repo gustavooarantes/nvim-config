@@ -7,10 +7,9 @@
 -- Or remove existing autocmds by their group name (which is prefixed with `lazyvim_` for the defaults)
 -- e.g. vim.api.nvim_del_augroup_by_name("lazyvim_wrap_spell")
 
--- Desabilita formatação automática dentro de ~/Supera e subdiretórios
 vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
   callback = function()
-    local path = vim.fn.expand("%:p") -- caminho absoluto do arquivo atual
+    local path = vim.fn.expand("%:p")
     local supera_path = vim.fn.expand("~") .. "/Supera/"
     if path:sub(1, #supera_path) == supera_path then
       vim.b.disable_autoformat = true
@@ -20,15 +19,12 @@ vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
   end,
 })
 
--- Autocmd que formata no save (mas respeita o disable_autoformat)
 vim.api.nvim_create_autocmd("BufWritePre", {
   callback = function()
-    -- Se o disable_autoformat for true, saia
     if vim.b.disable_autoformat then
       return
     end
 
-    -- Use o utilitário de formatação da LazyVim, que já sabe como lidar com o conform
     require("lazyvim.util.format").format()
   end,
 })
