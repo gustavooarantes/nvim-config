@@ -37,7 +37,13 @@ vim.opt.scrolloff = 10 -- 10 always visible lines above/below the cursor
 -- Cursor Line
 vim.opt.cursorline = true
 vim.opt.colorcolumn = "80"
-vim.opt.guicursor = "a:block"
+vim.opt.guicursor = table.concat({
+  "n-v-c:block",
+  "i-ci:block-blinkwait175-blinkon150-blinkoff175",
+  "r-cr:hor20",
+  "o:hor50",
+  "sm:block-blinkwait175-blinkon150-blinkoff175"
+}, ",")
 
 -- Folding
 vim.opt.foldlevel = 20

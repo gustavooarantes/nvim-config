@@ -5,7 +5,7 @@ return {
       my_clang_format = {
         command = "clang-format",
         args = {
-          '--style={BasedOnStyle: "LLVM", IndentWidth: 2, BreakBeforeBraces: "Attach", AllowShortFunctionsOnASingleLine: "Empty", ColumnLimit: 100}',
+          '--style={BasedOnStyle: "LLVM", IndentWidth: 4, BreakBeforeBraces: "Allman", AllowShortFunctionsOnASingleLine: "Empty", ColumnLimit: 80',
         },
       },
 

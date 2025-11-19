@@ -90,7 +90,13 @@ return {
                   { name = "JavaSE-21", path = "/usr/lib/jvm/java-21-openjdk" },
                 },
               },
-              format = { enabled = true },
+              format = {
+                enabled = true,
+                settings = {
+                  url = home .. "/.local/share/nvim/mason/share/google-java-format/google-style.xml",
+                  profile = "GoogleStyle",
+                },
+              },
               completion = { favoriteStaticMembers = {} },
               contentProvider = { preferred = "fernflower" },
             },
